@@ -1,0 +1,112 @@
+package com.rkeepermn;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class HttpsClient {
+   public static void main(String[] args) throws IOException {
+       new HttpsClient().httpsClient();
+
+   }
+   private void httpsClient() throws IOException {
+       String https_url = "https://ubeats-app-dev.ubcabtech.com/public/order/statusChanged";
+       URL url;
+       url = new URL(https_url);
+       HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+       con.setRequestMethod("POST");
+       con.setRequestProperty("Content-type", "text/xml");
+       con.setDoOutput(true);
+       String xmlInputString = "<?xml version=\"1.0\"?>\n" +
+               "<a RestCode=\"992500001\" DateTime=\"2022-07-06T21:31:26\" Situation=\"3\" seqnumber=\"2\" guid=\"{8A4AB428-B1AB-4301-A400-A3B889A1F7CA}\" name=\"Order Changed\" ShiftNum=\"3\" ShiftDate=\"2022-07-05T00:00:00\">\n" +
+               "\t<Station id=\"15006\" code=\"3\" name=\"PZHTCASH11\" NetName=\"PZHTCASH11\"/>\n" +
+               "\t<Server id=\"15005\" code=\"15005\" name=\"PZHTMID1\" NetName=\"PZHTMID1\"/>\n" +
+               "\t<Order visit=\"538837999\" orderIdent=\"256\" guid=\"{92CB1986-7F97-4CB7-BDBC-B886F7D45124}\" url=\"http://code.ucs.ru/qr?id=10A28F8B361B4B62B2A48E02E7AAE96292CB19867F974CB7BDBCB886F7D45124622BF656\" orderName=\"!100007\" version=\"4\" crc32=\"732482805\" orderSum=\"10000\" unpaidSum=\"0\" discountSum=\"0\" totalPieces=\"1000\" seqNumber=\"2\" paid=\"1\" finished=\"1\" persistentComment=\"\" nonPersistentComment=\"\" openTime=\"2022-07-06T21:26:30\" kdsstate=\"ready\">\n" +
+               "\t\t<Creator id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t</Creator>\n" +
+               "\t\t<Waiter id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t</Waiter>\n" +
+               "\t\t<OrderCategory id=\"1000317\" code=\"4\" name=\"EAT IN\"/>\n" +
+               "\t\t<OrderType id=\"1000019\" code=\"4\" name=\"EAT IN\"/>\n" +
+               "\t\t<Station id=\"15006\" code=\"3\" name=\"PZHTCASH11\"/>\n" +
+               "\t\t<Guests count=\"1\">\n" +
+               "\t\t\t<Guest guestLabel=\"1\"/>\n" +
+               "\t\t</Guests>\n" +
+               "\t\t<ExternalProps>\n" +
+               "\t\t\t<Prop name=\"{71F830D3-2DE3-4F74-B8F6-0BF199291C86}\" value=\"{BACC15A2-3973-4CD9-A267-B14E1454DF78}\"/>\n" +
+               "\t\t\t<Prop name=\"{7DC7AF79-1D00-4573-BE8A-A02C6FA3B430}\" value=\"D82\"/>\n" +
+               "\t\t</ExternalProps>\n" +
+               "\t\t<Session uni=\"1\" line_guid=\"{016A16B1-743E-4DC1-9FA2-DA708826D43D}\" state=\"6\" sessionID=\"1\" isDraft=\"0\" remindTime=\"2022-07-06T21:26:39\" startService=\"2022-07-06T21:26:31\" printed=\"0\" cookMins=\"0\">\n" +
+               "\t\t\t<Station id=\"15006\" code=\"3\" name=\"PZHTCASH11\"/>\n" +
+               "\t\t\t<Author id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t\t</Author>\n" +
+               "\t\t\t<Creator id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t\t</Creator>\n" +
+               "\t\t\t<PrintCheck uni=\"3\" line_guid=\"{A4666868-80AD-476D-8E82-680E453660C2}\" state=\"6\" amount=\"10000\" CheckNum=\"100007\" deleted=\"0\" printTime=\"2022-07-06T21:26:39\" startTime=\"2022-07-06T21:26:35\">\n" +
+               "\t\t\t\t<Author id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t\t\t</Author>\n" +
+               "\t\t\t\t<Pay id=\"1\" code=\"1\" name=\"MNT\" uni=\"13\" line_guid=\"{AD5C5114-F950-4513-A438-3CDB3A431401}\" state=\"6\" guid=\"{16D72549-14D8-4F31-9E2A-0A833D4F5EED}\" amount=\"10000\" basicSum=\"10000\"/>\n" +
+               "\t\t\t</PrintCheck>\n" +
+               "\t\t\t<PriceScale id=\"3\" code=\"1\" name=\"Main\"/>\n" +
+               "\t\t\t<TradeGroup id=\"7\" code=\"1\" name=\"Default\"/>\n" +
+               "\t\t</Session>\n" +
+               "\t\t<Session uni=\"2\" line_guid=\"{E4396CF7-F35E-466E-A550-D77A0C334DD4}\" state=\"6\" sessionID=\"2\" isDraft=\"0\" remindTime=\"2022-07-06T21:26:39\" startService=\"2022-07-06T21:26:34\" printed=\"1\" cookMins=\"0\">\n" +
+               "\t\t\t<Station id=\"15006\" code=\"3\" name=\"PZHTCASH11\"/>\n" +
+               "\t\t\t<Author id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t\t</Author>\n" +
+               "\t\t\t<Creator id=\"1000005\" code=\"5555\" name=\"Alex\">\n" +
+               "\t\t\t\t<Role id=\"100007\" code=\"7\" name=\"Administrators\"/>\n" +
+               "\t\t\t</Creator>\n" +
+               "\t\t\t<Discount id=\"1000426\" code=\"8\" name=\"2-3rd Pizza 50% MED\" uni=\"4\" line_guid=\"{66F70D5E-91B1-40DB-AF49-97382E91A6ED}\" state=\"5\" guid=\"{92639E5D-9613-4920-A7B6-89FBC65B6D39}\" amount=\"0\"/>\n" +
+               "\t\t\t<Discount id=\"1000528\" code=\"9\" name=\"2-3rd Pizza 50% LRG\" uni=\"5\" line_guid=\"{F29661E3-E51A-4910-8AC5-D13F55C090EB}\" state=\"5\" guid=\"{B4B0832E-C947-4F96-B360-5BBBAFCD891D}\" amount=\"0\"/>\n" +
+               "\t\t\t<Dish id=\"1000411\" code=\"75\" name=\"Тест 100\" uni=\"6\" line_guid=\"{22D98DFD-4FCA-4A84-B895-CDA42674D4A4}\" state=\"6\" guid=\"{AAB66CEA-EB5A-4C68-9C8B-966D714BA753}\" price=\"10000\" amount=\"10000\" kdsstate=\"ready\" paidAmount=\"10000\" quantity=\"1000\" srcQuantity=\"1000\"/>\n" +
+               "\t\t\t<Pay id=\"1\" code=\"1\" name=\"MNT\" uni=\"13\" line_guid=\"{AD5C5114-F950-4513-A438-3CDB3A431401}\" state=\"6\" guid=\"{16D72549-14D8-4F31-9E2A-0A833D4F5EED}\" amount=\"10000\" basicSum=\"10000\"/>\n" +
+               "\t\t\t<PriceScale id=\"3\" code=\"1\" name=\"Main\"/>\n" +
+               "\t\t\t<TradeGroup id=\"7\" code=\"1\" name=\"Default\"/>\n" +
+               "\t\t</Session>\n" +
+               "\t</Order>\n" +
+               "\t<Item/>\n" +
+               "\t<ChangeLog>\n" +
+               "\t\t<Dish id=\"1000411\" code=\"75\" name=\"Тест 100\" uni=\"6\" line_guid=\"{22D98DFD-4FCA-4A84-B895-CDA42674D4A4}\" state=\"6\" guid=\"{AAB66CEA-EB5A-4C68-9C8B-966D714BA753}\" price=\"10000\" amount=\"10000\" kdsstate=\"ready\" paidAmount=\"10000\" quantity=\"1000\" srcQuantity=\"1000\" number=\"1\" oldvalue=\"2\" newvalue=\"3\" OldStrValue=\"started\" NewStrValue=\"ready\" changed=\"1\">\n" +
+               "\t\t\t<Manager id=\"1000003\" code=\"100017\" name=\"http_user1\">\n" +
+               "\t\t\t\t<Role id=\"100017\" code=\"100017\" name=\"HTTPS\"/>\n" +
+               "\t\t\t</Manager>\n" +
+               "\t\t\t<Oper id=\"263\" name=\"Change the dish KDS-state\" guid=\"{7C5BD723-F0E7-4AD3-9CFD-F3E752B366EE}\"/>\n" +
+               "\t\t</Dish>\n" +
+               "\t</ChangeLog>\n" +
+               "\n" +
+               "    \n" +
+               "</a>";
+       OutputStream os = con.getOutputStream();
+       try{
+           byte[] input = xmlInputString.getBytes();
+           os.write(input, 0, input.length);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+       BufferedReader br = new BufferedReader(
+               new InputStreamReader(con.getInputStream()));
+       try {
+           StringBuilder response = new StringBuilder();
+           String responseLine = null;
+           while ((responseLine = br.readLine()) != null) {
+               response.append(responseLine.trim());
+           }
+           System.out.println(response.toString());
+       } finally {
+
+       }
+
+
+   }
+}

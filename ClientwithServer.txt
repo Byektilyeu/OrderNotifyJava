@@ -1,0 +1,99 @@
+package com.rkeepermn;
+
+import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.print.DocFlavor;
+import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.util.Scanner;
+
+public class Test {
+
+
+    public static void main(String[] args) throws IOException {
+        int port = 8000;
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        server.createContext("/", new Myhandler());
+        server.setExecutor(null);
+        server.start();
+        System.out.println("server running at port " + port);
+
+    }
+
+    static class Myhandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            if ("POST".equals(t.getRequestMethod())) {
+                InputStream inStream = t.getRequestBody();
+                int lenght = inStream.available();
+                final char[] buffer = new char[lenght];
+                final StringBuilder out = new StringBuilder();
+                Reader in = new InputStreamReader(inStream, "UTF-8");
+                try {
+                    for (; ; ) {
+                        int rsz = in.read(buffer, 0, buffer.length);
+                        if (rsz < 0)
+                            break;
+                        out.append(buffer, 0, rsz);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //  while (scanner.hasNextLine()) {
+                //     String data = scanner.nextLine();
+                // process the line
+                //   }
+
+                System.out.println(buffer);
+//                String https_url = "https://ubeats-app-dev.ubcabtech.com/public/order/statusChanged";
+//                URL url;
+//                url = new URL(https_url);
+//                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+//                con.setRequestMethod("POST");
+//                con.setRequestProperty("Content-type", "text/xml");
+//                con.setDoOutput(true);
+//                char[] xmlInputString = buffer;
+//                OutputStream ous = con.getOutputStream();
+//                try {
+//                    byte[] input = xmlInputString.toString().getBytes();
+//                    ous.write(input, 0, input.length);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                BufferedReader br = new BufferedReader(
+//                        new InputStreamReader(con.getInputStream()));
+//                try {
+//                    StringBuilder response = new StringBuilder();
+//                    String responseLine = null;
+//                    while ((responseLine = br.readLine()) != null) {
+//                        response.append(responseLine.trim());
+//                    }
+//
+//                    System.out.println(response.toString());
+                String responseS = inStream.toString();
+                t.sendResponseHeaders(200, responseS.length());
+                OutputStream os = t.getResponseBody();
+                os.write(responseS.getBytes());
+                os.close();
+
+
+            } else {
+                String response = "POST method-oor request yvuulna uu";
+                t.sendResponseHeaders(404, response.length());
+                OutputStream os = t.getResponseBody();
+                os.write(response.getBytes());
+
+            }
+        }
+    }
+}
+
+
+
