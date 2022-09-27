@@ -12,13 +12,16 @@ import java.net.InetSocketAddress;
 public class Server {
 
     //main function
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         int port = 8011;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", new Myhandler());
         server.setExecutor(null);
         server.start();
         System.out.println("server running at port " + port);
+        dbConnection database = new dbConnection();
+        database.createNewDb();
+        database.createNewTable();
         new GUI();
     }
 
@@ -56,7 +59,11 @@ public class Server {
                 OutputStream os = t.getResponseBody();
                 os.write(response.getBytes());
             }
+
+
+//            System.out.println("data" + xmlData);
             mainClass mainclass = new mainClass();
+
             try {
                 mainclass.getResponseData(xmlData);
             } catch (JSONException e) {

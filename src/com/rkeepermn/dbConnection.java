@@ -22,10 +22,9 @@ public class dbConnection {
         String url = "jdbc:sqlite:" + userDirectory + "\\voice.db";
         String sql1 = "CREATE TABLE IF NOT EXISTS orders (\n"
                 + "	visit integer PRIMARY KEY,\n"
-                + "	qmsNumber text NOT NULL,\n"
+                + "	qmsNumber integer NOT NULL,\n"
                 + "	kdsState text ,\n"
                 + "	voiceState boolean,\n"
-                + "	preState text ,\n"
                 + "	guid text\n"
                 + ");";
 

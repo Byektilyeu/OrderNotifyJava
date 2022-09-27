@@ -21,16 +21,15 @@ public class InsertApp {
         return conn;
     }
 
-    public void insert(Integer visit, String qmsNumber, String kdsState, Boolean voiceState, String preState, String guid) {
-        String sql = "INSERT INTO orders(visit, qmsNumber, kdsState, voiceState, preState, guid) VALUES(?,?,?,?,?,?)";
+    public void insert(Integer visit, Integer qmsNumber, String kdsState, Boolean voiceState, String guid) {
+        String sql = "INSERT or REPLACE INTO orders(visit, qmsNumber, kdsState, voiceState, guid) VALUES(?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = connect().prepareStatement(sql)) {
             pstmt.setInt(1, visit);
-            pstmt.setString(2, qmsNumber);
+            pstmt.setInt(2, qmsNumber);
             pstmt.setString(3, kdsState);
             pstmt.setBoolean(4, voiceState);
-            pstmt.setString(5, preState);
-            pstmt.setString(6, guid);
+            pstmt.setString(5, guid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
