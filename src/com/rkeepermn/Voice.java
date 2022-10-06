@@ -6,9 +6,9 @@ public class Voice {
         voiceRead voiceread = new voiceRead();
         String[] arr = voiceread.getGreaterThanZero();
         String voice = arr[0];
-        System.out.println("DIR PATH: " + userDirectory + "\\voices\\" + "KFC-" + voice + ".wav");
+        System.out.println("DIR PATH: " + userDirectory + "\\voices\\" + voice + ".wav");
 //        playVoice music = new playVoice("C:\\Users\\Lenovo T470\\Desktop\\R-Keeper\\QMSVoice\\voices\\" + voice + ".wav");
-        new playVoice(userDirectory + "\\voices\\" + "KFC-" + voice + ".wav");
+        new playVoice(userDirectory + "\\voices\\" + voice + ".wav");
         voiceRead qmsnumber = new voiceRead();
         qmsnumber.updateVoiceState();
         return voice;

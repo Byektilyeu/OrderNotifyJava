@@ -8,11 +8,14 @@ import org.json.JSONException;
 
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Server {
 
     //main function
     public static void main(String[] args) throws Exception {
+        //server-iin port
         int port = 8011;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", new Myhandler());
@@ -23,6 +26,18 @@ public class Server {
         database.createNewDb();
         database.createNewTable();
         new GUI();
+        Voice voice = new Voice();
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    voice.voiceP();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, 0, 10000);
     }
 
     static class Myhandler implements HttpHandler {

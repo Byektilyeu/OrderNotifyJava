@@ -40,12 +40,6 @@ public class mainClass {
             System.out.println("qmsNumber ==> : " + qmsNumber);
             InsertApp app = new InsertApp();
             app.insert(visit, qmsNumber, kdsstate, voiceState, guid);
-            Voice voice = new Voice();
-            try {
-                voice.voiceP();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }
